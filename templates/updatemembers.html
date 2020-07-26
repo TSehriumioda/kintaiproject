@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form class="form-signin" method="POST" action=''>{% csrf_token %}
+  <h1 class="h3 mb-3 font-weight-normal">メンバー更新画面</h1>
+  {% if error %}
+  {{ error }}
+  {% endif %}
+
+  <input type="number" class="form-control" name='members_Id' placeholder="members_Id" required autofocus>
+  <input type="text" class="form-control" name='members_Name' placeholder="members_Name" required autofocus>
+  <input type="password" class="form-control" name='password' placeholder="Password" required>
+  管理者権限：あり
+  <input type="radio" class="form-control" name='admin_Flg' placeholder="admin_Flg" 　value="1" required>
+  なし
+  <input type="radio" class="form-control" name='admin_Flg' placeholder="admin_Flg" value="0" required>
+  <input type="number" class="form-control" name='allpayd_Days' placeholder="allpayd_Days" required autofocus>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">追加</button>
+  <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+</form>
+{% endblock content %}

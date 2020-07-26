@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form class="form-signin" method="POST" action=''>{% csrf_token %}
+  <h1 class="h3 mb-3 font-weight-normal">休暇等情報作成画面</h1>
+  {% if error %}
+  {{ error }}
+  {% endif %}
+
+  <!-- <input type="number" class="form-control" name='dayoff_Id' placeholder="members_Id" required autofocus> -->
+  <input type="text" class="form-control" name='dayoff_Name' placeholder="休暇名" required autofocus>
+  <select class="form-control" name='dayoff_attribute' placeholder="休暇属性" required autofocus>
+    <option>休暇属性を設定してください</option>
+    <option value="有給">有給</option>
+    <option value="無給">無給</option>
+    <option value="遅刻・早退">遅刻・早退</option>
+    <option value="欠勤">欠勤</option>
+    </select>  
+
+  <input type="number" class="form-control" name='work_time' placeholder="相当労働時間" required>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">追加</button>
+  <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+</form>
+{% endblock content %}

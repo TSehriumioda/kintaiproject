@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+<html>
+    {% block content %}
+    <body>
+        <h1>休暇等情報一覧</h1>
+        <table border="1">
+            <tr>
+               <th>休暇ID</th>
+               <th>休暇名</th>
+               <th>属性</th>
+               <th>相当時間</th>
+               <th>作成日時</th>
+               <th>作成者</th>
+               <th>更新日時</th>               
+               <th>更新者</th>
+
+            </tr>
+            {% for item in dayoff_list %}
+                <tr>
+                    <td>{{ item.dayoff_id }}</td>
+                    <td>{{ item.dayoff_name }}</td>
+                    <td>{{ item.dayoff_attribute }}</td>
+                    <td>{{ item.work_time }}</td>
+                    <td>{{ item.create_date }}</td>
+                    <td>{{ item.create_by }}</td>
+                    <td>{{ item.update_date }}</td>
+                    <td>{{ item.update_by }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </body>
+    {% endblock content %}
+</html>

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+<html>
+    {% block content %}
+    <body>
+        <h1>社員一覧</h1>
+        <table border="1">
+            <tr>
+               <th>社員ID</th>
+               <th>社員名</th>
+               <th>パスワード</th>
+               <th>管理者権限</th>
+               <th>有給日数</th>
+               <th>作成日時</th>
+               <th>作成者</th>
+               <th>更新日時</th>               
+               <th>更新者</th>
+
+            </tr>
+            {% for item in members_list %}
+                <tr>
+                    <td>{{ item.members_id }}</td>
+                    <td>{{ item.members_name }}</td>
+                    <td>{{ item.password }}</td>
+                    <td>{{ item.admin_flg }}</td>
+                    <td>{{ item.allpayd_days }}</td>
+                    <td>{{ item.create_date }}</td>
+                    <td>{{ item.create_by }}</td>
+                    <td>{{ item.update_date }}</td>
+                    <td>{{ item.update_by }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </body>
+    {% endblock content %}
+</html>
