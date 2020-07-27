@@ -21,3 +21,12 @@ def projectallfunc(request):
     }
     return render(request, 'projectall.html',context)
 
+####
+#プロジェクト新規追加
+####
+
+def projectcreatefunc(request):
+    project_members = {
+        'projectmembers_list':TMembers.objects.all()
+    }
+    return render(request,'projectcreate.html',project_members)

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+プロジェクト追加画面
+{{ error }}
+<form>
+<input type="text" name='project_name' placeholder="project_Name" required autofocus><br>
+プロジェクト開始日：<input type="date" name="project_Start">
+プロジェクト終了日：<input type="date" name="project_End">
+
+プロジェクトメンバー選択<br>
+<select id="list1" name="members" size="5" multiple>
+    {% for item in projectmembers_list %}
+    <option value=>{{ item.members_name }}</option>
+    {% endfor %}
+</select>
+
+<input type = "submit" value="追加"><br>
+</form>
+
+{% endblock content %}

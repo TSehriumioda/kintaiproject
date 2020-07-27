@@ -13,7 +13,7 @@ class MDayoff(models.Model):
     create_by = models.PositiveIntegerField(db_column='create_By')  # Field name made lowercase.
     update_date = models.DateTimeField(db_column='update_Date')  # Field name made lowercase.
     update_by = models.IntegerField(db_column='update_By')  # Field name made lowercase.
-    delete_flg = models.TextField(db_column='delete_Flg')  # Field name made lowercase. This field type is a guess.
+    delete_flg = models.PositiveIntegerField(db_column='delete_Flg')  # Field name made lowercase.
 
     class Meta:
         managed = False

@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 
 ##########################################
 ###休暇情報管理画面 使用DB(model)MDayoff - TMembers
-###一覧 新規追加　更新　削除(未終了　delete_flgの処理で、特定カラムだけを書き換えてセーブ、ができない)
+###一覧 新規追加　更新　削除
 ##########################################
 
 ####
@@ -20,6 +20,7 @@ def dayoffallfunc(request):
     context = {
         'dayoff_list':MDayoff.objects.filter(delete_flg = 0)
     }
+    #TODO:TMembersから登録者、更新者を抜き出して紐づける処理を作成すること
     return render(request, 'dayoffall.html',context)
 
 
@@ -58,7 +59,6 @@ def dayoffupdatefunc(request):
         create_By   = MDayoff.objects.values_list('create_by', flat=True).get(pk = dayoff_Id)
         dt_now = datetime.datetime.now()
 
-
         newDayoff = MDayoff(dayoff_id = dayoff_Id,dayoff_name = dayoff_Name,
                             dayoff_attribute=dayoff_Attribute,work_time = work_Time,
                             create_date = create_Date,create_by = create_By,update_date=dt_now,update_by = 1)
@@ -84,12 +84,7 @@ def dayoffdeletefunc(request):
         try:
             dayoff = MDayoff.objects.get(pk = dayoff_Id)
             if delete_Flg == "1":
-                dayoff = MDayoff.objects.get(dayoff_id = dayoff_Id)
                 dayoff.delete_flg = 1
-
-                # test = MDayoff.objects.values_list('delete_flg', flat=True).get(pk = dayoff_Id)
-                # print(test)##この時点でdayoff.delete_flgを1にできていない
-
                 dayoff.save()
                 message = {'message':'削除しました'}
             else:

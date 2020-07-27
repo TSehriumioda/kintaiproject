@@ -24,6 +24,13 @@ def loginfunc(request):
 
         try:
             entries = TMembers.objects.get(members_id=members_id2,password=password2)
+
+            loginusername  = TMembers.objects.values_list('members_name',flat=True).get(members_id=members_id2)
+            loginuseradmin = TMembers.objects.values_list('admin_flg',flat=True).get(members_id = members_id2)
+            request.session['loginusername'] = loginusername #データ取得できてた
+            request.session['loginuser'] = loginuseradmin
+            name = request.session['loginusername']
+            print(name)
             return redirect('eturan')
         except:
             return render(request,'login.html',{'error':'入力されたユーザーは登録されていません'})
@@ -42,6 +49,7 @@ def eturanfunc(request):
     context = {
         'members_list':TMembers.objects.all()
     }
+    # name = request.session['loginusername'] ⇦TODO:ユーザー名を表示したいが文字化けする
     return render(request, 'eturan.html',context)
 
 ####
@@ -60,14 +68,15 @@ def createfunc(request):
         try:
             member = TMembers.objects.get(members_id = members_Id)
             error = {'error':'このユーザーは登録されています'}
-            return render(request, 'eturan.html',error)
+            return render(request, 'ecreatemembers.html',error)
         except:
+            username = request.session['loginusername']
             user = TMembers(members_id = members_Id,members_name = members_Name,password = password,
                             admin_flg = admin_Flg,allpayd_days = int(allpayd_Days),create_date = dt_now,
-                            create_by = "仮",update_date=dt_now,update_by = "仮")
+                            create_by = username,update_date=dt_now,update_by = username)
 
             user.save()
-            return render(request,'login.html')
+            return render(request,'createmembers.html',{'error':'ユーザーが登録されました'})
 
     return render(request,'createmembers.html')
 
@@ -85,17 +94,19 @@ def updatemembersfunc(request):
         create_Date = TMembers.objects.values_list('create_date', flat=True).get(pk = members_Id)
         create_By   = TMembers.objects.values_list('create_by', flat=True).get(pk = members_Id)
         dt_now = datetime.datetime.now()
+        username = request.session['loginusername']
         user = TMembers(members_id = members_Id,members_name = members_Name,password = password,
                         admin_flg = admin_Flg,allpayd_days = int(allpayd_Days),create_date = create_Date,
-                        create_by = create_By,update_date=dt_now,update_by = "仮")
+                        create_by = create_By,update_date=dt_now,update_by = username)
 
         try:
             member = TMembers.objects.get(members_id = members_Id)
             user.save()
-            return render(request,'login.html')
+            message = {'message':'更新されました'}
+            return render(request,'updatemembers.html',message)
         except:
             error = {'error':'このユーザーは登録されていません'}
-            return render(request, 'eturan.html',error)    
+            return render(request, 'updatemembers.html',error)    
 
     return render(request,'updatemembers.html')
 
