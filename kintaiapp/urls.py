@@ -1,13 +1,8 @@
-# from django.conf.urls import url
-# from . import views
-
-# urlpatterns = [
-#     url('', views.index, name='index'),
-# ]
 from django.conf.urls import url
 from . import views
 from django.urls import path
-from .views import eturanfunc,loginfunc,createfunc,updatemembersfunc,deletemembersfunc,dayoffallfunc,dayoffcreatefunc
+from .views import eturanfunc,loginfunc,createfunc,updatemembersfunc,deletemembersfunc
+from .viewsdayoff import dayoffallfunc,dayoffcreatefunc, dayoffupdatefunc
 
 urlpatterns = [
     #ログイン画面
@@ -19,7 +14,7 @@ urlpatterns = [
     path('members/delete/',deletemembersfunc,name='deletemembers'),
     #休暇等情報管理画面
     path('dayoff/all/',dayoffallfunc,name='dayoffall'),
-    path('dayoff/create/',dayoffcreatefunc,name='dayoffcreate')
-
+    path('dayoff/create/',dayoffcreatefunc,name='dayoffcreate'),
+    path('dayoff/update/', dayoffupdatefunc,name='dayoffupdate'),
 
 ]

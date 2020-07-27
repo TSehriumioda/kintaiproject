@@ -1,8 +1,3 @@
-# from django.shortcuts import render
-# from django.http import HttpResponse
-
-# def index(request):
-#     return HttpResponse('<h1>Hello, myapp1!</h1>')
 from django.http import HttpResponse
 from django.shortcuts import render ,redirect
 from .models import TMembers,MDayoff
@@ -13,33 +8,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 
-##########################################
-###休暇情報管理画面 使用DB(model)MDayoff - TMembers
-###一覧 新規追加
-##########################################
 
-def dayoffallfunc(request):
-    context = {
-        'dayoff_list':MDayoff.objects.filter(delete_flg = 0)
-    }
-    return render(request, 'dayoffall.html',context)
 
-def dayoffcreatefunc(request):
-    if request.method == 'POST':
-        #TODO：休暇等IDはオートインクリメントさせたいからそのようにしたい:OK!
 
-        dayoff_Name = request.POST['dayoff_Name']
-        dayoff_Attribute = request.POST['dayoff_attribute']
-        work_Time = request.POST['work_time']
-        dt_now = datetime.datetime.now()
-
-        newDayoff = MDayoff.objects.create(dayoff_name = dayoff_Name,dayoff_attribute=dayoff_Attribute,work_time = work_Time,
-                        create_date = dt_now,create_by = 1 ,update_date=dt_now,update_by = 1)
-
-        newDayoff.save()
-        return render(request,'login.html')
-
-    return render(request,'dayoffcreate.html')
 
 
 
@@ -55,16 +26,18 @@ def loginfunc(request):
         password2 = request.POST['password']
 
         if type(request.POST['members_Id'])is str == True:#is strが（）の外になかったため比較ができていなかった
-            error = {'error':'members_Idは半角数字で入力してください'} #todo:各種エラーが表示されないが他のメイン機能優先する
-            return render(request,'login.html',error)
+            # error = {'error':'members_Idは半角数字で入力してください'} #todo:各種エラーが表示されないが他のメイン機能優先する
+            return render(request,'login.html',{'error':'members_Idは半角数字で入力してください'} )
 
         try:
             entries = TMembers.objects.get(members_id=members_id2,password=password2)
 
             if entries is not None:
+                print("ログイン可能")
                 return redirect('eturan')
             else:
                 print(entries)
+                print("ログインエラー　登録されていません")
                 return render(request,'login.html', {'error':'入力されたユーザーは登録されていません'})
         ##entriesに何も入ってなかった場合
         except:
@@ -76,16 +49,6 @@ def loginfunc(request):
 ###社員情報管理画面　使用DB(model)TMembers
 # 閲覧/追加/更新/削除
 ##########################################
-
-# def getformdata():        まとめておいて使いたい
-#         members_Id = request.POST['members_Id']
-#         members_Name = request.POST['members_Name']
-#         password = request.POST['password']
-#         admin_Flg = request.POST['admin_Flg']
-#         allpayd_Days = request.POST['allpayd_Days']
-#         dt_now = datetime.datetime.now()
-
-#         return members_Id,members_Name,password,admin_Flg,allpayd_Days,dt_now
 
 ####
 #一覧閲覧
@@ -102,7 +65,6 @@ def eturanfunc(request):
 def createfunc(request):
     if request.method == 'POST':
 
-        #TODO:メンバーズIDはオートインクリメントしてほしいナ……
         members_Id = request.POST['members_Id']
         members_Name = request.POST['members_Name']
         password = request.POST['password']

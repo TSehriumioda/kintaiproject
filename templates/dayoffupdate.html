@@ -2,11 +2,12 @@
 
 {% block content %}
 <form class="form-signin" method="POST" action=''>{% csrf_token %}
-  <h1 class="h3 mb-3 font-weight-normal">休暇等情報作成画面</h1>
-  {{ error }}
-  {{ message }}
-  
-  <!-- <input type="number" class="form-control" name='dayoff_Id' placeholder="members_Id" required autofocus> -->
+  <h1 class="h3 mb-3 font-weight-normal">休暇等情報更新画面</h1>
+
+{{ error }}
+{{ message }}
+
+  <input type="number" class="form-control" name='dayoff_Id' placeholder="休暇情報ID" required autofocus>
   <input type="text" class="form-control" name='dayoff_Name' placeholder="休暇名" required autofocus>
   <select class="form-control" name='dayoff_attribute' placeholder="休暇属性" required autofocus>
     <option>休暇属性を設定してください</option>
@@ -16,7 +17,7 @@
     <option value="欠勤">欠勤</option>
     </select>  
 
-  <input type="number" class="form-control" name='work_time' placeholder="相当労働時間" required>
+  <input type="number" step="0.25"　class="form-control" name='work_time' placeholder="相当労働時間" 　min="0.5" required>
   <button class="btn btn-lg btn-primary btn-block" type="submit">追加</button>
   <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
 </form>
