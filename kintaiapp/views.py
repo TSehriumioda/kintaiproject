@@ -8,13 +8,6 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 
-
-
-
-
-
-
-
 ##########################################
 ###ログイン画面 使用DB(model)TMembes
 ##########################################
@@ -25,23 +18,15 @@ def loginfunc(request):
         members_id2 = request.POST['members_Id']
         password2 = request.POST['password']
 
-        if type(request.POST['members_Id'])is str == True:#is strが（）の外になかったため比較ができていなかった
-            # error = {'error':'members_Idは半角数字で入力してください'} #todo:各種エラーが表示されないが他のメイン機能優先する
-            return render(request,'login.html',{'error':'members_Idは半角数字で入力してください'} )
+        # if type(members_id2)is not int:
+        #     return render(request,'login.html',{'error':'members_Idは半角数字で入力してください'} )
+        #名前とパスワードで照合したほうが使いやすいと思うので最終的には変更したい
 
         try:
             entries = TMembers.objects.get(members_id=members_id2,password=password2)
-
-            if entries is not None:
-                print("ログイン可能")
-                return redirect('eturan')
-            else:
-                print(entries)
-                print("ログインエラー　登録されていません")
-                return render(request,'login.html', {'error':'入力されたユーザーは登録されていません'})
-        ##entriesに何も入ってなかった場合
+            return redirect('eturan')
         except:
-            return redirect('login')
+            return render(request,'login.html',{'error':'入力されたユーザーは登録されていません'})
 
     return render(request,'login.html')
 

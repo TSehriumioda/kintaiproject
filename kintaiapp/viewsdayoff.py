@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 
 ##########################################
 ###休暇情報管理画面 使用DB(model)MDayoff - TMembers
-###一覧 新規追加
+###一覧 新規追加　更新　削除(未終了　delete_flgの処理で、特定カラムだけを書き換えてセーブ、ができない)
 ##########################################
 
 ####
@@ -75,3 +75,30 @@ def dayoffupdatefunc(request):
 ####
 #削除
 ####
+
+def dayoffdeletefunc(request):
+    if request.method == 'POST':
+        dayoff_Id = request.POST['dayoff_Id']
+        delete_Flg = request.POST['delete_Flg']
+
+        try:
+            dayoff = MDayoff.objects.get(pk = dayoff_Id)
+            if delete_Flg == "1":
+                dayoff = MDayoff.objects.get(dayoff_id = dayoff_Id)
+                dayoff.delete_flg = 1
+
+                # test = MDayoff.objects.values_list('delete_flg', flat=True).get(pk = dayoff_Id)
+                # print(test)##この時点でdayoff.delete_flgを1にできていない
+
+                dayoff.save()
+                message = {'message':'削除しました'}
+            else:
+                message = {'message':'削除キャンセルしました'}
+
+            return render(request,'dayoffdelete.html',message)
+
+        except:
+            error = {'error':'入力されたデータは登録されていません'}
+            return render(request,'dayoffdelete.html',error)    
+
+    return render(request,'dayoffdelete.html')
