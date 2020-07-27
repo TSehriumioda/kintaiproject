@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 
 ##########################################
 ###プロジェクト情報管理画面 使用DB(model)MProject - TProjtctMembers
-###一覧 新規追加　
+###一覧
 ##########################################
 
 ####
