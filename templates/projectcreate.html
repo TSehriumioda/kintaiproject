@@ -1,21 +1,68 @@
-{% extends 'base.html' %}
+{% load static %}
 
-{% block content %}
-プロジェクト追加画面
-{{ error }}
-<form>
-<input type="text" name='project_name' placeholder="project_Name" required autofocus><br>
-プロジェクト開始日：<input type="date" name="project_Start">
-プロジェクト終了日：<input type="date" name="project_End">
+<html lang="ja">
 
-プロジェクトメンバー選択<br>
-<select id="list1" name="members" size="5" multiple>
-    {% for item in projectmembers_list %}
-    <option value=>{{ item.members_name }}</option>
-    {% endfor %}
-</select>
+    <head>
+        <title>プロジェクト新規追加</title>
+        <meta charset="UTF-8">  
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
 
-<input type = "submit" value="追加"><br>
-</form>
+    <body>
 
-{% endblock content %}
+        {% block content %}
+            プロジェクト追加画面
+            {{ error }}
+            <form>
+                <input type="text" name='project_name' placeholder="project_Name" required autofocus><br>
+                プロジェクト開始日：<input type="date" name="project_Start"><br>
+                プロジェクト終了日：<input type="date" name="project_End"><br>
+
+                プロジェクトメンバー選択<br>
+                <table class="sample">
+                    <tr>
+                        <td>
+                            <select name="s1" size="5" multiple="multiple">
+                                {% for item in projectmembers_list %}
+                                <option value="{{ item.pk }}">{{ item.members_name }}</option>
+                                {% endfor %}
+                            </select>
+
+                        </td>
+                        <td>
+                            <input type="button" name="right" value="≫" /><br /><br />
+                            <input type="button" name="left" value="≪" />
+                        </td>
+                        <td>
+                            <select name="s2" size="5" multiple="multiple">
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+
+                <input type = "submit" value="追加"><br>
+            </form>
+
+        {% endblock content %}
+
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('input[name=right]').on('click', function() {
+                    move('s1', 's2');
+                });
+            
+                $('input[name=left]').on('click', function() {
+                    move('s2', 's1');
+                });
+            
+                var move = function(_this, target) {
+                    $('select[name=' + _this + '] option:selected').each(function() {
+                        $('select[name=' + target + ']').append($(this).clone());
+                        $(this).remove();
+                    });
+                };
+            });
+        </script>
+    </body>
+</html>

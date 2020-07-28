@@ -19,3 +19,8 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+import logging
+l = logging.getLogger('django.db.backends')
+l.setLevel(logging.DEBUG)
+l.addHandler(logging.StreamHandler())

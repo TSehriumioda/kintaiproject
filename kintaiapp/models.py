@@ -94,6 +94,18 @@ class TMembers(models.Model):
         db_table = 't_members'
 
 
+# class TProjtctMembers(models.Model):
+#     project = models.OneToOneField(MProject, models.DO_NOTHING, db_column='project_Id', primary_key=True)  # Field name made lowercase.
+#     members = models.OneToOneField(TMembers, models.DO_NOTHING, db_column='members_Id')  # Field name made lowercase.
+#     create_date = models.DateTimeField(db_column='create_Date')  # Field name made lowercase.
+#     create_by = models.IntegerField(db_column='create_By')  # Field name made lowercase.
+#     update_date = models.DateTimeField(db_column='update_Date')  # Field name made lowercase.
+#     update_by = models.IntegerField(db_column='update_By')  # Field name made lowercase.
+
+#     class Meta:
+#         managed = False
+#         db_table = 't_projtct_members'
+#         unique_together = (('project', 'members'),)
 class TProjtctMembers(models.Model):
     project = models.OneToOneField(MProject, models.DO_NOTHING, db_column='project_Id', primary_key=True)  # Field name made lowercase.
     members = models.OneToOneField(TMembers, models.DO_NOTHING, db_column='members_Id')  # Field name made lowercase.
@@ -101,6 +113,7 @@ class TProjtctMembers(models.Model):
     create_by = models.IntegerField(db_column='create_By')  # Field name made lowercase.
     update_date = models.DateTimeField(db_column='update_Date')  # Field name made lowercase.
     update_by = models.IntegerField(db_column='update_By')  # Field name made lowercase.
+    delete_flg = models.PositiveIntegerField(db_column='delete_Flg', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False

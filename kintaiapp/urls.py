@@ -3,7 +3,7 @@ from django.urls import path
 from .viewsaccount import loginfunc,logoutfunc
 from .viewsmembers import eturanfunc,createfunc,updatemembersfunc,deletemembersfunc
 from .viewsdayoff import dayoffallfunc,dayoffcreatefunc, dayoffupdatefunc,dayoffdeletefunc
-from .viewsproject import projectallfunc,projectcreatefunc
+from .viewsproject import projectallfunc,projectcreatefunc,projectdeletefunc
 
 urlpatterns = [
     #ログイン画面
@@ -21,5 +21,6 @@ urlpatterns = [
     path('dayoff/delete/',dayoffdeletefunc,name='dayoffdelete'),
     #プロジェクト管理画面
     path('project/all/',projectallfunc,name='projectall'),
-    path('project/create/',projectcreatefunc,name='projectcreate')
+    path('project/create/',projectcreatefunc,name='projectcreate'),
+    path('project/delete/',projectdeletefunc,name='projectdelete'),
 ]
