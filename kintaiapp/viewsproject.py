@@ -18,6 +18,7 @@ def projectallfunc(request):
     context = {
         'project_list':MProject.objects.filter(delete_flg = 0)
     }
+
     return render(request, 'projectall.html',context)
 
 ####
@@ -41,33 +42,15 @@ def projectdeletefunc(request):
 
         try:
             deleteproject = MProject.objects.get(pk = project_Id)
-            deletePmember = TProjtctMembers.objects.filter(pk = project_Id)
-            print(deletePmember)
             if delete_Flg == "1":
                 if deleteproject.delete_flg is 0:
                     deleteproject.delete_flg = 1
 
-                    print(1)
-                    delPM =[]
-                    print(2)
+                    TProjtctMembers.objects.filter(pk=project_Id).update(delete_flg=1)
 
-                    #TODO:１複数更新ができるようにしたい
-
-                    # TProjtctMembers.objects.filter(pk=project_Id).update(delete_flg=1)
-
-                    for some in deletePmember:
-                        some.delete_flg = 1
-                        some.save()
-
-                    # for PM in deletePmember:
-                    #     PM.delete_flg = 1
-                    #     delPM.append(PM)
-                    print(3)
-                    # TProjtctMembers.objects.bulk_update(delPM, fields=['delete_flg'])
                     deleteproject.save()
                     message = {'message':'削除しました'}
                 else:
-                    print(deletePmember)
                     message = {'message':'入力されたデータはすでに削除されています'}
                 
                 return render(request,'projectdelete.html',message)
