@@ -1,12 +1,13 @@
 from django.conf.urls import url
-from . import views
 from django.urls import path
-from .views import eturanfunc,loginfunc,createfunc,updatemembersfunc,deletemembersfunc
+from .viewsaccount import loginfunc,logoutfunc
+from .viewsmembers import eturanfunc,createfunc,updatemembersfunc,deletemembersfunc
 from .viewsdayoff import dayoffallfunc,dayoffcreatefunc, dayoffupdatefunc,dayoffdeletefunc
 from .viewsproject import projectallfunc,projectcreatefunc
 
 urlpatterns = [
     #ログイン画面
+    path('logout/',logoutfunc,name='logout'),
     path('login/',loginfunc,name='login'),
     #社員管理画面
     path('members/all/',eturanfunc,name='eturan'),
