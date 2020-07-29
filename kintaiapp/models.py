@@ -1,6 +1,3 @@
-# from django.db import models
-
-# # Create your models here.
 from django.db import models
 from django.utils import timezone
 
@@ -77,12 +74,11 @@ class TAttendanceDetail(models.Model):
         managed = False
         db_table = 't_attendance_detail'
 
-##考える：メンバーズIDをオートインクリメントにするか考えておく(プロジェクトメンバーが子キーなのでソコ込みで)
 class TMembers(models.Model):
     members_id = models.PositiveIntegerField(db_column='members_Id', primary_key=True)  # Field name made lowercase.
     members_name = models.CharField(db_column='members_Name', max_length=20)  # Field name made lowercase.
     password = models.CharField(max_length=20)
-    admin_flg = models.PositiveIntegerField(db_column='admin_Flg')  # Field name made lowercase.
+    admin_flg = models.IntegerField(db_column='admin_Flg')  # Field name made lowercase.
     allpayd_days = models.PositiveIntegerField(db_column='allpayd_Days')  # Field name made lowercase.
     create_date = models.DateTimeField(db_column='create_Date', blank=True, null=True)  # Field name made lowercase.
     create_by = models.CharField(db_column='create_By', max_length=20, blank=True, null=True)  # Field name made lowercase.
@@ -93,22 +89,9 @@ class TMembers(models.Model):
         managed = False
         db_table = 't_members'
 
-
-# class TProjtctMembers(models.Model):
-#     project = models.OneToOneField(MProject, models.DO_NOTHING, db_column='project_Id', primary_key=True)  # Field name made lowercase.
-#     members = models.OneToOneField(TMembers, models.DO_NOTHING, db_column='members_Id')  # Field name made lowercase.
-#     create_date = models.DateTimeField(db_column='create_Date')  # Field name made lowercase.
-#     create_by = models.IntegerField(db_column='create_By')  # Field name made lowercase.
-#     update_date = models.DateTimeField(db_column='update_Date')  # Field name made lowercase.
-#     update_by = models.IntegerField(db_column='update_By')  # Field name made lowercase.
-
-#     class Meta:
-#         managed = False
-#         db_table = 't_projtct_members'
-#         unique_together = (('project', 'members'),)
-class TProjtctMembers(models.Model):
+class TProjectMembers(models.Model):
     project = models.OneToOneField(MProject, models.DO_NOTHING, db_column='project_Id', primary_key=True)  # Field name made lowercase.
-    members = models.OneToOneField(TMembers, models.DO_NOTHING, db_column='members_Id')  # Field name made lowercase.
+    members = models.ForeignKey(TMembers, models.DO_NOTHING, db_column='members_Id')  # Field name made lowercase.
     create_date = models.DateTimeField(db_column='create_Date')  # Field name made lowercase.
     create_by = models.IntegerField(db_column='create_By')  # Field name made lowercase.
     update_date = models.DateTimeField(db_column='update_Date')  # Field name made lowercase.
@@ -117,8 +100,10 @@ class TProjtctMembers(models.Model):
 
     class Meta:
         managed = False
-        db_table = 't_projtct_members'
+        db_table = 't_project_members'
         unique_together = (('project', 'members'),)
+
+
 
 
 class TWorkDetail(models.Model):

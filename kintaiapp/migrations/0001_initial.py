@@ -126,7 +126,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='TProjtctMembers',
+            name='TProjectMembers',
             fields=[
                 ('project', models.OneToOneField(db_column='project_Id', on_delete=django.db.models.deletion.DO_NOTHING, primary_key=True, serialize=False, to='kintaiapp.MProject')),
                 ('create_date', models.DateTimeField(db_column='create_Date')),

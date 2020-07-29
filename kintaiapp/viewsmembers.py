@@ -45,18 +45,21 @@ def createfunc(request):
         password = request.POST['password']
         admin_Flg = request.POST['admin_Flg']
         allpayd_Days = request.POST['allpayd_Days']
-
         dt_now = datetime.datetime.now()
+
+        if admin_Flg == 'on':
+            admin_Flg = 1
+
         try:
             member = TMembers.objects.get(members_id = members_Id)
+            print(member)
             error = {'error':'このユーザーは登録されています'}
-            return render(request, 'ecreatemembers.html',error)
+            return render(request, 'createmembers.html',error)
         except:
             username = request.session['loginusername']
             user = TMembers(members_id = members_Id,members_name = members_Name,password = password,
                             admin_flg = admin_Flg,allpayd_days = int(allpayd_Days),create_date = dt_now,
                             create_by = username,update_date=dt_now,update_by = username)
-
             user.save()
             return render(request,'createmembers.html',{'error':'ユーザーが登録されました'})
 

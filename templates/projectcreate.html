@@ -13,18 +13,21 @@
         {% block content %}
             プロジェクト追加画面
             {{ error }}
-            <form>
-                <input type="text" name='project_name' placeholder="project_Name" required autofocus><br>
+            <form name="formname" method="POST" action=''>{% csrf_token %}
+                
+                
+                <input type='number' name='project_Code' placeholder="プロジェクトコード" required autofocus><br> 
+                <input type="text" name='project_Name' placeholder="プロジェクト名" required autofocus><br>
                 プロジェクト開始日：<input type="date" name="project_Start"><br>
                 プロジェクト終了日：<input type="date" name="project_End"><br>
 
-                プロジェクトメンバー選択<br>
+
                 <table class="sample">
                     <tr>
                         <td>
-                            <select name="s1" size="5" multiple="multiple">
+                            <select  name="s1" size="5" multiple="multiple">
                                 {% for item in projectmembers_list %}
-                                <option value="{{ item.pk }}">{{ item.members_name }}</option>
+                                <option value="{{ item.pk }}">{{item.members_id}} : {{ item.members_name }}</option>
                                 {% endfor %}
                             </select>
 
@@ -34,18 +37,28 @@
                             <input type="button" name="left" value="≪" />
                         </td>
                         <td>
-                            <select name="s2" size="5" multiple="multiple">
+                            <select id = 's2'  name="s2" size="5" multiple="multiple">
                             </select>
                         </td>
                     </tr>
                 </table>
-
-                <input type = "submit" value="追加"><br>
+                <input type = "submit" value="追加" onclick="clickBtn3()"><br>
             </form>
-
         {% endblock content %}
 
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!-- 全選択　-->
+        <script>
+            function clickBtn3(){
+               const S2 = document.formname.s2;
+           
+                var select = document.getElementById("s2")
+               for (let i = 0; i < S2.length; i++){
+                   select[i].selected = true;
+               }
+           }   
+           </script>
+        <!--　左右に移動させる機能-->
         <script>
             $(document).ready(function() {
                 $('input[name=right]').on('click', function() {
