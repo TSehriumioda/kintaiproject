@@ -34,13 +34,9 @@
                       </td>
                       <td>
                           <select id = 's2'  name="s2" size="5" multiple="multiple">
-                            {% for item in choosemember %}
-                                
+                            {% for item in choosemember %}                                
                             <option value="{{ item.pk }}">
-                                
-                                {{item.members_id}} : 
-                                
-                               
+                                {{item.members_id}} : {{ item.members_name}}
                             </option>
                             {% endfor %}
                           </select>

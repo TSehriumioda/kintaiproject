@@ -65,9 +65,7 @@ def projectcreatefunc(request):
 
 ####
 #プロジェクト更新
-#### 入力されたものだけ削除したり登録したりする処理がしたいから新規追加と同じ状態だとむり
-#### ・プロジェクトコードで探したらその部分チェックドにする→・新しいデータが入る部分を一回ドロップさせて登録しなおす?
-#・
+####
 def projectupdatefunc(request):
     if request.method == 'POST':
         ########## 一覧画面　value=0 ##############
@@ -77,20 +75,41 @@ def projectupdatefunc(request):
 
             #プロジェクトコードからデータ取得する
             updateproject = MProject.objects.get(pk=project_Id)
+            choosemember = TProjectMembers.objects.filter(pk=project_Id)
 
-
+            #外部結合ができなくて無理やりつくったので直したい
+            choosemembers_list = []
+            for cname in choosemember: 
+                choosemembers_list.append(cname.members_id)
+            print(choosemembers_list)
 
             member = TMembers.objects.all()
-            #TODO：外部結合させてTProject<embersで選択されていないなににもなってないものをTMembersから取得したい
-            choosemember = TProjectMembers.objects.filter(pk=project_Id)
+            A_list = []
+            B_list =[]
+            for it in member:
+                if it.members_id not in choosemembers_list:
+                    A_list.append(it)
+                else:
+                    B_list.append(it)
+
+            iru =[]
+            for aaaaa in B_list:
+                OS = TMembers.objects.get(members_id = aaaaa.members_id)
+                iru.append(OS)
+
+            inai =[]
+            for vvv in A_list:
+                OS = TMembers.objects.get(members_id = vvv.members_id)
+                inai.append(OS)
+            
             #取得したデータをフォームの中に入れる
             checked = {
                 'project_code':updateproject.project_code,
                 'project_name':updateproject.project_name,
                 'project_Start':updateproject.project_start,
                 'project_End':updateproject.project_end,
-                'allmember':member,
-                'choosemember':choosemember,
+                'allmember':inai,
+                'choosemember':iru,
                 'project_id':project_Id,
             }
             return render(request,'projectupdate.html',checked)
@@ -110,11 +129,6 @@ def projectupdatefunc(request):
             dt_now = datetime.datetime.now()
 
             try:
-                notnewproject = MProject.objects.get(pk = roject_Id)
-                print("登録されていないプロジェクトです")
-                return render(request,'projectupdate.html')
-
-            except:
                 updateproject = MProject(project_id=project_Id,project_name = project_Name,project_code=project_Code,
                                                     project_start=project_Start,project_end=project_End,
                                                     create_date = create_Date,create_by = create_By ,update_date=dt_now,update_by = 1,delete_flg=0)
@@ -138,6 +152,10 @@ def projectupdatefunc(request):
                 }
                 return render(request,'projectall.html',project_members)
 
+            except:
+                notnewproject = MProject.objects.get(pk = project_Id)
+                print("登録されていないプロジェクトです")
+                return render(request,'projectupdate.html',{'error':'エラー'})
 
 
 
