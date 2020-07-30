@@ -65,12 +65,91 @@ def projectcreatefunc(request):
 
 ####
 #プロジェクト更新
-####
+#### 入力されたものだけ削除したり登録したりする処理がしたいから新規追加と同じ状態だとむり
+#### ・プロジェクトコードで探したらその部分チェックドにする→・新しいデータが入る部分を一回ドロップさせて登録しなおす?
+#・
 def projectupdatefunc(request):
+    if request.method == 'POST':
+        ########## 一覧画面　value=0 ##############
+        if request.POST['hiddenpost'] is '0':
+            project_Id = request.POST['project_id']
+            print(project_Id)
+
+            #プロジェクトコードからデータ取得する
+            updateproject = MProject.objects.get(pk=project_Id)
 
 
-    
-    return render(request,'projectupdate.html')
+
+            member = TMembers.objects.all()
+            #TODO：外部結合させてTProject<embersで選択されていないなににもなってないものをTMembersから取得したい
+            choosemember = TProjectMembers.objects.filter(pk=project_Id)
+            #取得したデータをフォームの中に入れる
+            checked = {
+                'project_code':updateproject.project_code,
+                'project_name':updateproject.project_name,
+                'project_Start':updateproject.project_start,
+                'project_End':updateproject.project_end,
+                'allmember':member,
+                'choosemember':choosemember,
+                'project_id':project_Id,
+            }
+            return render(request,'projectupdate.html',checked)
+
+        ########## 編集画面　value=１ ##############
+        else:
+            print("編集画面から")
+            project_Id = request.POST['project_id']
+            
+            project_Code = request.POST['project_Code']
+            project_Name = request.POST['project_Name']
+            project_Start = request.POST['project_Start']
+            project_End = request.POST['project_End']
+
+            create_Date = MProject.objects.values_list('create_date', flat=True).get(pk = project_Id)
+            create_By   = MProject.objects.values_list('create_by', flat=True).get(pk = project_Id)
+            dt_now = datetime.datetime.now()
+
+            try:
+                notnewproject = MProject.objects.get(pk = roject_Id)
+                print("登録されていないプロジェクトです")
+                return render(request,'projectupdate.html')
+
+            except:
+                updateproject = MProject(project_id=project_Id,project_name = project_Name,project_code=project_Code,
+                                                    project_start=project_Start,project_end=project_End,
+                                                    create_date = create_Date,create_by = create_By ,update_date=dt_now,update_by = 1,delete_flg=0)
+
+                updateproject.save()
+
+                TProjectMembers.objects.filter(pk=project_Id).delete()
+
+                project_Member = request.POST.getlist('s2')
+
+                for item in project_Member:
+                    TProjectMembers.objects.update_or_create(project_id=project_Id,members_id=item,
+                                                    create_date = dt_now,create_by = 1 ,
+                                                    update_date=dt_now,update_by = 1,delete_flg=0)
+
+                project_members = {
+                    'projectmembers_list':TMembers.objects.all(),
+                    'message':'更新されました',
+                     'project_list':MProject.objects.filter(delete_flg = 0)
+
+                }
+                return render(request,'projectall.html',project_members)
+
+
+
+
+            return render(request,'projectupdate.html',{'error':'編集画面から'})
+
+
+    else:
+        project_members = {
+            'projectmembers_list':TMembers.objects.all()
+        }
+        return render(request,'projectupdate.html',project_members)
+
 
 ####
 #プロジェクト削除

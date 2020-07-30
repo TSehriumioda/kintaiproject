@@ -1,14 +1,89 @@
 <!DOCTYPE html>
 <html lang="ja">
     <head>
-<title>プロジェクト更新</title>
+      <title>プロジェクト更新</title>
     </head>
     <body>
-      <h1>プロジェクト更新</h1> 
-      
-      
-      
+
+      {% block content %}
+          プロジェクト更新画面
+          {{ error }}
+          <form name="formname" method="POST" action=''>{% csrf_token %}
+              
+            <input type='number' name='project_Code' placeholder="プロジェクトコード" value="{{ project_code }}" required autofocus><br> 
+              <input type="text" name='project_Name' placeholder="プロジェクト名"  value="{{ project_name }}"><br>
+              プロジェクト開始日：<input type="date" name="project_Start" value = "{{ project_Start|date:'Y-m-d'}}"><br>
+              プロジェクト終了日：<input type="date" name="project_End" value="{{ project_End|date:'Y-m-d' }}"><br>
+
+
+              <table class="sample">
+                  <tr>
+                      <td>
+                          <select  name="s1" size="5" multiple="multiple">
+
+                              {% for item in allmember %}
+                                
+                              <option value="{{ item.pk }}">{{item.members_id}} : {{ item.members_name }}</option>
+                              {% endfor %}
+                          </select>
+
+                      </td>
+                      <td>
+                          <input type="button" name="right" value="≫" /><br /><br />
+                          <input type="button" name="left" value="≪" />
+                      </td>
+                      <td>
+                          <select id = 's2'  name="s2" size="5" multiple="multiple">
+                            {% for item in choosemember %}
+                                
+                            <option value="{{ item.pk }}">
+                                
+                                {{item.members_id}} : 
+                                
+                               
+                            </option>
+                            {% endfor %}
+                          </select>
+                      </td>
+                  </tr>
+              </table>
+              <input type = "submit" value="更新" onclick="clickBtn3()">
+              <input type='hidden' name='project_id' value='{{ project_id }}' >
+
+              <input type='hidden' name='hiddenpost' value='1'><br>
+          </form>
+      {% endblock content %}
+
       <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    
-    </body>
+      <!-- 全選択　-->
+      <script>
+          function clickBtn3(){
+             const S2 = document.formname.s2;
+         
+              var select = document.getElementById("s2")
+             for (let i = 0; i < S2.length; i++){
+                 select[i].selected = true;
+             }
+         }   
+         </script>
+      <!--　左右に移動させる機能-->
+      <script>
+          $(document).ready(function() {
+              $('input[name=right]').on('click', function() {
+                  move('s1', 's2');
+              });
+          
+              $('input[name=left]').on('click', function() {
+                  move('s2', 's1');
+              });
+          
+              var move = function(_this, target) {
+                  $('select[name=' + _this + '] option:selected').each(function() {
+                      $('select[name=' + target + ']').append($(this).clone());
+                      $(this).remove();
+                  });
+              };
+          });
+      </script>
+  </body>
 </html>
