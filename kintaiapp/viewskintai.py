@@ -34,6 +34,7 @@ def kintaieturanfunc(request):
 
         #これで外部結合して名前が取得できる
         TAT = TAttendanceDetail.objects.select_related().get(work_date=1)
+        dayoffname=TAT.dayoff.dayoff_name
         print(TAT.dayoff.dayoff_name)
 
 
@@ -102,28 +103,60 @@ def kintaieturanfunc(request):
             # print(TAT.dayoff.dayoff_name)
 
             #元データ取得
-            # times = TAttendanceDetail.objects.get(work_date=days)
-            #出勤時間取得
-            # start_time = times.start_time.strftime("%H:%M"))
-            #退勤時間取得
-            # end_time = times.end_time.strftime("%H:%M"))
-            #休憩時間取得
-            # break_time = times.break_time
-            #実働時間取得
-            # actual_worktime = times.actualwork_time
-            #労働時間取得
-            # work_time = times.work_time
+            try:
+                T =TAttendanceDetail.objects.get(work_date=days)
+                if TAttendanceDetail.objects.get(work_date=days) is "":
+                    print("元データなし")
+                else:
 
-            #作業内訳
-            
+                    times = TAttendanceDetail.objects.get(work_date=days)
+                    
+                    
+                    #出勤時間取得
+                    start_time = times.start_time.strftime("%H:%M")
+                    #退勤時間取得
+                    end_time = times.end_time.strftime("%H:%M")
+                    #休憩時間取得
+                    break_time = times.break_time
+                    #実働時間取得
+                    actual_worktime = times.actualwork_time
+                    #労働時間取得
+                    work_time = times.work_time
 
-            #全項目追加
-            alldata = {'day':days,'youbi':w_list[a]}
-            
-            #alldata = {'day':days,'youbi':w_list[a],'dayoffname':TAT,}
+                    #作業内訳
+                    
 
-            alllist.append(alldata)
+                    #全項目追加
+                    # alldata = {'day':days,'youbi':w_list[a]}
+                    
+                    alldata = {'day':days,'youbi':w_list[a],'dayoffname':dayoffname,'start_time':start_time,
+                                'end_time':end_time,'break_time':break_time,'actual_worktime':actual_worktime,'work_time':work_time}
 
+                    alllist.append(alldata)
+            except:
+                print("つかれたね・・・・・・")
+                times = ""                   
+                    
+                #出勤時間取得
+                start_time = ""
+                #退勤時間取得
+                end_time = ""
+                #休憩時間取得
+                break_time =  ""
+                #実働時間取得
+                actual_worktime = ""
+                #労働時間取得
+                work_time = ""
+
+                #作業内訳
+                
+                #全項目追加
+                # alldata = {'day':days,'youbi':w_list[a]}
+                
+                alldata = {'day':days,'youbi':w_list[a],'dayoffname':"",'start_time':start_time,
+                            'end_time':end_time,'break_time':break_time,'actual_worktime':actual_worktime,'work_time':work_time}
+
+                alllist.append(alldata)
         
 
 

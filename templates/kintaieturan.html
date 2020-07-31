@@ -90,12 +90,12 @@
      <tr>
         <td>{{ alldata.day }}</td>
         <td>{{ alldata.youbi }}</td>
-        <td></td>
-        <td></td> 
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{ alldata.dayoffname }}</td>
+        <td>{{ alldata.start_time}}</td> 
+        <td>{{ alldata.end_time}}</td>
+        <td>{{ alldata.break_time}}</td>
+        <td>{{ alldata.actual_worktime }}</td>
+        <td>{{ alldata.work_time }}</td>
         <td>
             {% for item in workdetail %}
             {{ item.pname }}
