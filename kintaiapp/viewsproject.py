@@ -68,10 +68,10 @@ def projectcreatefunc(request):
 ####
 def projectupdatefunc(request):
     if request.method == 'POST':
+        project_Id = request.POST['project_id']
         ########## 一覧画面　value=0 ##############
         if request.POST['hiddenpost'] is '0':
             project_Id = request.POST['project_id']
-            print(project_Id)
 
             #プロジェクトコードからデータ取得する
             updateproject = MProject.objects.get(pk=project_Id)
@@ -81,7 +81,6 @@ def projectupdatefunc(request):
             choosemembers_list = []
             for cname in choosemember: 
                 choosemembers_list.append(cname.members_id)
-            print(choosemembers_list)
 
             member = TMembers.objects.all()
             A_list = []

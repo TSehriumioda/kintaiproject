@@ -6,16 +6,17 @@
         <h1>プロジェクト一覧・更新</h1>
         {{ message }}
         <table border="1">
+            
             <tr>
-               <th>プロジェクトコード</th>
-               <th>プロジェクト名</th>
-               <th>プロジェクト開始日</th>
-               <th>プロジェクト終了日</th>
-               <th>作成日時</th>
-               <th>更新日時</th>               
-               <th>編集</th>
+                <th>プロジェクトコード</th>
+                <th>プロジェクト名</th>
+                <th>プロジェクト開始日</th>
+                <th>プロジェクト終了日</th>
+                <th>作成日時</th>
+                <th>更新日時</th>               
+                <th>編集</th>
             </tr>
-            <form name='kousin' method='POST' action="{% url  'projectupdate' %}">{% csrf_token %}
+                       
             {% for item in project_list %}
                 <tr>
                     <td>{{ item.project_code }}</td>                    
@@ -24,12 +25,14 @@
                     <td>{{ item.project_end }}</td>
                     <td>{{ item.create_date }}</td>
                     <td>{{ item.update_date }}</td>
+                    <form name='kousin' method='POST' action="{% url  'projectupdate' %}">{% csrf_token %}
                     <td><input type='submit' value='編集'>
                         <input type='hidden' name='project_id' value='{{ item.project_id }}' >
                         <input type='hidden' name='hiddenpost' value='0'></td>
+                    </form>    
                 </tr>
             {% endfor %}
-        </form>
+        
         </table>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <!-- 全選択　-->

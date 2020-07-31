@@ -1,0 +1,122 @@
+<html>
+{% block content %}
+
+<head>
+    <title>勤怠閲覧</title>
+</head>
+
+<body>
+    <h1>勤怠閲覧</h1>
+    {{ message }}
+    <h1>{{ month }}月</h1>
+
+    <form method="POST" action=''>{% csrf_token %}
+        <select>
+            {% for yearmonth in workmonth %}
+            <option value='{{yearmonth}}'>
+                {{ yearmonth }}
+            </option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <table border="1">
+
+        <tr>
+        <td colspan="6">月間所定労働時間</td>
+            </td
+            >
+            <td></td>
+            <td></td>
+            <td colspan="2">
+        </td>
+        </tr>
+        <tr>
+        </tr>
+        <tr>
+            <td colspan="6">有給休暇残日数</td>
+            </td>
+            <td></td>
+            <td></td>
+            <td colspan="2">
+        </tr>
+        <tr>
+            <td colspan="6">遅刻・早退</td>
+            </td>
+            <td></td>
+            <td></td>
+            <td colspan="2">
+        </tr>
+        <tr>
+            <td colspan="6">欠勤</td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td colspan="2">
+        </tr>
+        <tr>
+            <td colspan="6">その他無給休暇</td>
+            </td>
+            <td>
+            </td>
+            <td></TD>
+            <TD colspan="2">
+        </tr>
+        <tr>
+            <th>日</th>
+            <th>曜</th>
+            <th>休暇</th>
+            <th>出勤時間</th>
+            <th>退勤時間</th>
+            <th>休憩時間</th>
+            <th>実働時間</th>
+            <th>労働時間</th>
+            <th>作業内訳</th>
+        </tr>
+        {% for item in project_list %}
+        <tr>
+            <td>{{ item.project_code }}</td>
+            <td>{{ item.project_name }}</td>
+            <td>{{ item.project_start }}</td>
+            <td>{{ item.project_end }}</td>
+            <td>{{ item.create_date }}</td>
+            <td>{{ item.update_date }}</td>
+        </tr>
+        {% endfor %}
+ 
+     {% for alldata in alllist %}
+     <tr>
+        <td>{{ alldata.day }}</td>
+        <td>{{ alldata.youbi }}</td>
+        <td></td>
+        <td></td> 
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            {% for item in workdetail %}
+            {{ item.pname }}
+            {{ item.pworktime }}<br>
+            {% endfor %}
+
+        </td>                         
+     </tr>
+     {% endfor %}
+
+
+    </table>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+
+    </script>
+</body>
+{% endblock content %}
+
+</html>
