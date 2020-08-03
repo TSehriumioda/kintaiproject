@@ -26,6 +26,7 @@ def loginfunc(request):
 
             loginusername  = TMembers.objects.values_list('members_name',flat=True).get(members_id=members_id2)
             loginuseradmin = TMembers.objects.values_list('admin_flg',flat=True).get(members_id = members_id2)
+            request.session['loginmembers_id'] = members_id2
             request.session['loginusername'] = loginusername
             request.session['loginuser'] = loginuseradmin
 

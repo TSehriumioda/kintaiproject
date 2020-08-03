@@ -54,61 +54,6 @@ class TAttendance(models.Model):
         managed = False
         db_table = 't_attendance'
 
-
-# class TAttendanceDetail(models.Model):
-#     workdetail_id = models.AutoField(db_column='workdetail_Id', primary_key=True)  # Field name made lowercase.
-#     work = models.ForeignKey(TAttendance, models.DO_NOTHING, db_column='work_Id')  # Field name made lowercase.
-#     work_date = models.CharField(db_column='work_Date', max_length=2)  # Field name made lowercase.
-#     dayoff = models.ForeignKey(MDayoff, models.DO_NOTHING, db_column='dayoff_Id')  # Field name made lowercase.
-#     start_time = models.DateTimeField(db_column='start_Time')  # Field name made lowercase.
-#     end_time = models.DateTimeField(db_column='end_Time')  # Field name made lowercase.
-#     actualwork_time = models.FloatField(db_column='actualwork_Time')  # Field name made lowercase.
-#     work_time = models.FloatField(db_column='work_Time')  # Field name made lowercase.
-#     break_time = models.FloatField(db_column='break_Time')  # Field name made lowercase.
-#     create_date = models.DateTimeField(db_column='create_Date')  # Field name made lowercase.
-#     create_by = models.IntegerField(db_column='create_By')  # Field name made lowercase.
-#     update_date = models.DateTimeField(db_column='update_Date')  # Field name made lowercase.
-#     update_by = models.IntegerField(db_column='update_By')  # Field name made lowercase.
-
-#     class Meta:
-#         managed = False
-#         db_table = 't_attendance_detail'
-# class TAttendanceDetail(models.Model):
-#     workdetail_id = models.AutoField(db_column='workdetail_Id', primary_key=True)  # Field name made lowercase.
-#     work = models.ForeignKey(TAttendance, models.DO_NOTHING, db_column='work_Id')  # Field name made lowercase.
-#     work_date = models.CharField(db_column='work_Date', max_length=10)  # Field name made lowercase.
-#     dayoff = models.ForeignKey(MDayoff, models.DO_NOTHING, db_column='dayoff_Id')  # Field name made lowercase.
-#     start_time = models.DateTimeField(db_column='start_Time')  # Field name made lowercase.
-#     end_time = models.DateTimeField(db_column='end_Time')  # Field name made lowercase.
-#     actualwork_time = models.FloatField(db_column='actualwork_Time')  # Field name made lowercase.
-#     work_time = models.FloatField(db_column='work_Time')  # Field name made lowercase.
-#     break_time = models.FloatField(db_column='break_Time')  # Field name made lowercase.
-#     create_date = models.DateTimeField(db_column='create_Date')  # Field name made lowercase.
-#     create_by = models.IntegerField(db_column='create_By')  # Field name made lowercase.
-#     update_date = models.DateTimeField(db_column='update_Date')  # Field name made lowercase.
-#     update_by = models.IntegerField(db_column='update_By')  # Field name made lowercase.
-
-#     class Meta:
-#         managed = False
-#         db_table = 't_attendance_detail'
-# class TAttendanceDetail(models.Model):
-#     workdetail_id = models.AutoField(db_column='workdetail_Id', primary_key=True)  # Field name made lowercase.
-#     work = models.ForeignKey(TAttendance, models.DO_NOTHING, db_column='work_Id')  # Field name made lowercase.
-#     work_date = models.PositiveIntegerField(db_column='work_Date')  # Field name made lowercase.
-#     dayoff = models.ForeignKey(MDayoff, models.DO_NOTHING, db_column='dayoff_Id')  # Field name made lowercase.
-#     start_time = models.DateTimeField(db_column='start_Time')  # Field name made lowercase.
-#     end_time = models.DateTimeField(db_column='end_Time')  # Field name made lowercase.
-#     actualwork_time = models.FloatField(db_column='actualwork_Time')  # Field name made lowercase.
-#     work_time = models.FloatField(db_column='work_Time')  # Field name made lowercase.
-#     break_time = models.FloatField(db_column='break_Time')  # Field name made lowercase.
-#     create_date = models.DateTimeField(db_column='create_Date')  # Field name made lowercase.
-#     create_by = models.IntegerField(db_column='create_By')  # Field name made lowercase.
-#     update_date = models.DateTimeField(db_column='update_Date')  # Field name made lowercase.
-#     update_by = models.IntegerField(db_column='update_By')  # Field name made lowercase.
-
-#     class Meta:
-#         managed = False
-#         db_table = 't_attendance_detail'
 class TAttendanceDetail(models.Model):
     workdetail_id = models.AutoField(db_column='workdetail_Id', primary_key=True)  # Field name made lowercase.
     work = models.ForeignKey(TAttendance, models.DO_NOTHING, db_column='work_Id')  # Field name made lowercase.

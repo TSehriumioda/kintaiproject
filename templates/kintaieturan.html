@@ -10,9 +10,9 @@
     {{ message }}
     <h1>{{ month }}月</h1>
 
-    <form method="POST" action=''>{% csrf_token %}
-        <select>
-            {% for yearmonth in workmonth %}
+    <form id="submit_form" method="POST" action=''>{% csrf_token %}
+        <select name="yearmonth" onchange="submit(this.form)">
+            {% for yearmonth in workmonth reversed %}
             <option value='{{yearmonth}}'>
                 {{ yearmonth }}
             </option>
@@ -21,36 +21,34 @@
     </form>
 
     <table border="1">
-
         <tr>
-        <td colspan="6">月間所定労働時間</td>
-            </td
-            >
-            <td></td>
+            <td colspan="6">月間所定労働時間</td>
+            </td>
+            <td>{{ roudou }}</td>
             <td></td>
             <td colspan="2">
-        </td>
+            </td>
         </tr>
         <tr>
         </tr>
         <tr>
             <td colspan="6">有給休暇残日数</td>
             </td>
-            <td></td>
+            <td>{{ zanyuukyuu }}</td>
             <td></td>
             <td colspan="2">
         </tr>
         <tr>
             <td colspan="6">遅刻・早退</td>
             </td>
-            <td></td>
+            <td>{{ late_early }}</td>
             <td></td>
             <td colspan="2">
         </tr>
         <tr>
             <td colspan="6">欠勤</td>
             </td>
-            <td>
+            <td>{{ absenceday }}
             </td>
             <td>
             </td>
@@ -59,7 +57,7 @@
         <tr>
             <td colspan="6">その他無給休暇</td>
             </td>
-            <td>
+            <td>{{ unpayd_day }}
             </td>
             <td></TD>
             <TD colspan="2">
@@ -85,35 +83,24 @@
             <td>{{ item.update_date }}</td>
         </tr>
         {% endfor %}
- 
-     {% for alldata in alllist %}
-     <tr>
-        <td>{{ alldata.day }}</td>
-        <td>{{ alldata.youbi }}</td>
-        <td>{{ alldata.dayoffname }}</td>
-        <td>{{ alldata.start_time}}</td> 
-        <td>{{ alldata.end_time}}</td>
-        <td>{{ alldata.break_time}}</td>
-        <td>{{ alldata.actual_worktime }}</td>
-        <td>{{ alldata.work_time }}</td>
-        <td> <!-- 辞書型で送ってきた中の辞書型リストをとる方法をさがす -->
 
-            <!-- {% for pname,pworktime in alllist.alldata.workdetaillist.items %}
-                {{ pname }} : {{ pworktime }}
-            {{ item.pname }}
-            {{ item.pworktime }} -->
-            <br>
-            <!-- {% endfor %}  --> 
-            
+        {% for alldata in alllist %}
+        <tr>
+            <td>{{ alldata.day }}</td>
+            <td>{{ alldata.youbi }}</td>
+            <td>{{ alldata.dayoffname }}</td>
+            <td>{{ alldata.start_time}}</td>
+            <td>{{ alldata.end_time}}</td>
+            <td>{{ alldata.break_time}}</td>
+            <td>{{ alldata.actual_worktime }}</td>
+            <td>{{ alldata.work_time }}</td>
+            <td>
                 {% for i in alldata.workdetaillist %}
-                    {{ i.pname }} : {{ i.pworktime }}<br>
+                {{ i.pname }} : {{ i.pworktime }}<br>
                 {% endfor %}
-
-
-
-        </td>                         
-     </tr>
-     {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
 
 
 
@@ -125,8 +112,13 @@
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script>
 
+    <script type="text/javascript">
+        $(function () {
+            $("#submit_select").change(function () {
+                $("#submit_form").submit();
+            });
+        });
     </script>
 </body>
 {% endblock content %}
