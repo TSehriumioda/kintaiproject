@@ -4,7 +4,7 @@ from .viewsaccount import loginfunc,logoutfunc
 from .viewsmembers import eturanfunc,createfunc,updatemembersfunc,deletemembersfunc
 from .viewsdayoff import dayoffallfunc,dayoffcreatefunc, dayoffupdatefunc,dayoffdeletefunc
 from .viewsproject import projectallfunc,projectcreatefunc,projectdeletefunc,projectupdatefunc
-from .viewskintai import kintaieturanfunc
+from .viewskintai import kintaieturanfunc,kintaienterfunc
 
 
 urlpatterns = [
@@ -28,4 +28,5 @@ urlpatterns = [
     path('project/delete/',projectdeletefunc,name='projectdelete'),
     #共通画面
     path('common/eturan/',kintaieturanfunc,name='kintaieturan'),
+    path('common/enter/',kintaienterfunc,name='kintaienter'),
 ]

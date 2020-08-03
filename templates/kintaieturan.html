@@ -96,15 +96,27 @@
         <td>{{ alldata.break_time}}</td>
         <td>{{ alldata.actual_worktime }}</td>
         <td>{{ alldata.work_time }}</td>
-        <td>
-            {% for item in workdetail %}
+        <td> <!-- 辞書型で送ってきた中の辞書型リストをとる方法をさがす -->
+
+            <!-- {% for pname,pworktime in alllist.alldata.workdetaillist.items %}
+                {{ pname }} : {{ pworktime }}
             {{ item.pname }}
-            {{ item.pworktime }}<br>
-            {% endfor %}
+            {{ item.pworktime }} -->
+            <br>
+            <!-- {% endfor %}  --> 
+            
+                {% for i in alldata.workdetaillist %}
+                    {{ i.pname }} : {{ i.pworktime }}<br>
+                {% endfor %}
+
+
 
         </td>                         
      </tr>
      {% endfor %}
+
+
+
 
 
     </table>
