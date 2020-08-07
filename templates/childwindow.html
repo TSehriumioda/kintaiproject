@@ -1,0 +1,52 @@
+<meta http-equiv="content-type" charset="utf-8">
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <b>作業入力画面</b>
+    {{ message }}
+    <form method ='POST' action="">{% csrf_token %}
+        <p>プロジェクト検索<input type="search" placeholder="コード/プロジェクト名入力" name='projectcode'>
+            <input type="submit" value="検索"></p>
+    </form>
+    
+    <p>プロジェクトコード一覧・検索結果：
+        <select id="chl_name" size=10 name="projectlist">
+        {% for item in project %}
+            <option value="{{ item.projectname }}">{{ item.projectid }}:{{ item.projectname }}</option>
+        {% endfor %}
+        </select>
+    
+    </p>
+    <p>作業時間入力：<input type="number" id="chl_age"></p>
+
+    <p><a href="javascript:void(0);" onclick="returnWindow()">親ウィンドウに値を渡す</a></p>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+
+                
+
+        function returnWindow() {
+            // 親ウィンドウの存在チェック
+            if (!window.opener || window.opener.closed) {
+                window.alert('親ウィンドウがありません。');
+                return false;
+            }
+            // 子ウィンドから親ウィンドウへ値を渡す
+            window.opener.document.getElementById("pr_name").innerHTML = document.getElementById("chl_name").value;
+            window.opener.document.getElementById("pr_age").innerHTML = document.getElementById("chl_age").value;
+        }
+
+      
+    </script>
+
+
+
+
+</body>
+
+</html>

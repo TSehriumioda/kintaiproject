@@ -1,22 +1,33 @@
-
 <html>
-    <head>
 
-        <title>
-            勤怠入力画面
-        </title>
-    </head>
-    <body>
-勤怠入力(親)
+<head>
 
-        <form method='POST' action="">
-            <select>
-                <option value='1'>
-                    ここに月日選択が入りポストで送信される
-                </option>
-            </select>
-        </form>
+    <title>
+        勤怠入力画面
+    </title>
+</head>
 
+<body>
+    勤怠入力
+    {{ message }}
+
+    <form id="submit_form" method="POST" action=''>{% csrf_token %}
+        <select name="yearmonth" onchange="submit(this.form)">
+            
+            <option value="">月を選択してください</option>
+            {% for yearmonth in workmonth reversed %}
+            <option value='{{ yearmonth }}'>
+                {{ yearmonth }}
+            </option>
+            {% endfor %}
+        </select>
+        <input type="hidden" name="postselect" value="0">
+    </form>
+
+    <form action="{% url 'kintaitouroku' %}" method="POST">{% csrf_token %}
+        <input type="submit" value="登録" >
+        <input type="hidden" name='postselect' value="1">
+            <input type="hidden" name='yearmonth' value='{{ chooseYM }}'>
         <table border="1">
             <tr>
                 <th>日</th>
@@ -27,18 +38,49 @@
                 <th>作業</th>
             </tr>
             <tr>
-                
+
+                {% for item in alllist %}
+                <td>{{ item.day }}</td>
+                <td>{{ item.youbi }}</td>
+                <td>
+                    <select name="dayoff{{ item.day }}">
+                        <!-- <option value="null">休暇情報を選択</option> -->
+                        {% for i in dayofflist %}
+                        <option value='{{ i.dayoffid }}'>{{ i.dayoffname}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+
+                <td><input type="time" name="starttime{{item.day}}" value="{{ item.starthour }}:{{ item.startmin }}">
+                </td>
+
+                <td><input type="time" name="endtime{{item.day}}">
+                {{ item.endtime }}
+                </td>
+                <td>
+                    <span name="parent_window">
+                        <p><span id="pr_name"></span><span id="pr_age"></span></p>
+                        <p><a href="javascript:void(0);"
+                                onclick="openWindow1('{% url 'kintaichild' %}', 'child_window1')">編集</a></p>
+                    </span>
+
+                </td>
+                <input type="hidden" name="doneAllTask" value="{{ item.day }}">
             </tr>
-
-
+            {% endfor %}
         </table>
+    </form>
 
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <meta http-equiv="content-type" charset="utf-8">
 
-    </body>
+    <script type="text/javascript">
 
+        function openWindow1(url, name) {
+            window.open(url, Math.random() + name, 'width=400,height=500 ,scrollbars=yes,resizable=yes');
+        }
 
-
-
-
+    </script>
+</body>
 
 </html>
